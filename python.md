@@ -93,3 +93,76 @@ t.num: 0 Test.num: 0
 Test.num: 1
 cls.num: 2
 ```
+### 5.列表生成/推导式和字典推导/生成式
+列表推导
+```
+>>> [x*x for x in range(1, 11)]
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+```
+字典推导
+```
+>>> d1 = {'a':1, 'b':2, 'c':3}
+>>> {v:k for k,v in d1.items()}
+{1: 'a', 2: 'b', 3: 'c'}
+```
+### 6.元类mateclass
+类是元类的一个实例，可以使用`type()`方法查看：
+
+类的类型是type
+```
+>>> type(object)
+<class 'type'>
+```
+实例的类型是类
+```
+>>> o = object()
+>>> type(o)
+<class 'object'>
+```
+`type()`方法不仅可以获取对象的类型，也可以创建一个类，只需这样`type(类名,(父类集合),{方法集合})`。
+```
+>>> def func(self):
+...     print("hello")
+... 
+>>> Hello = type('Hello', (object,), {'hello':func})
+>>> h = Hello()
+>>> h.hello()
+hello
+```
+所有的类都从`object`派生，所有的元类从`type`派生，创建一个元类：
+```
+class ListMateClass(type):
+    
+    # cls：类的对象
+    # name：类名
+    # bases：父类集合
+    # attrs：方法集合
+    def __new__(cls, name, bases, attrs):
+        print("类名：", name)
+        print("父类：", bases)
+        print("方法：", attrs)
+        return type.__new__(cls, name, bases, attrs)
+
+class MyList(list, metaclass=ListMateClass):
+    pass
+
+L = MyList()
+```
+```
+(test_pipenv-hhC387KC) [dy@dy-pc al]$ python ListMateClass.py
+类名： MyList
+父类： (<class 'list'>,)
+方法： {'__module__': '__main__', '__qualname__': 'MyList'}
+```
+
+### 7.ORM（Object Relational Mapping，对象关系映射）
+数据库中会用到
+### 8.
+
+
+
+
+
+
+
+
