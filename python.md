@@ -157,7 +157,57 @@ L = MyList()
 
 ### 7.ORM（Object Relational Mapping，对象关系映射）
 数据库中会用到
-### 8.
+### 8.%与format
+```
+>>> a = 1
+>>> t = (1,2,3)
+>>> "%s" %a         # %字符串格式化数字
+'1'
+>>> "%s" %t         # %字符串格式化元组，由于后面的%后面的类型原本就应该是一个元组，所以引号内应该要有3个%s
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: not all arguments converted during string formatting
+>>> "%s %s %s" %t   # 引号内应该要有3个%s，分别对应元组t的三个元素
+'1 2 3'
+>>> "%s" %(t,)      # 传元组参数要这样
+'(1, 2, 3)'
+>>> "{arg}".format(arg=a)
+'1'
+>>> "{arg}".format(arg=t)   # 用format就没有前面%的问题
+'(1, 2, 3)'
+```
+### 9.迭代器与生成器
+#### 迭代器
+判断一个对象是否可迭代
+```
+>>> from collections import Iterable
+>>> isinstance([], Iterable)
+True
+```
+然而可迭代的对象不一定是迭代器，可以被next()函数调用并不断返回下一个值的对象称为迭代器：Iterator。
+```
+>>> from collections import Iterator
+>>> isinstance((x for x in range(10)), Iterator)
+True
+```
+#### 生成器其实就是一个推导式，可以根据之前的数据推导出后面的数据，eg：
+```
+>>> def gen():
+...     i = 1
+...     while i < 10:
+...             i +=1
+...             yield i
+... 
+>>> gen()
+<generator object gen at 0x7f6206b0b888>
+>>> g = gen()
+>>> next(g)
+2
+>>> next(g)
+3
+>>> next(g)
+4
+```
 
 
 
