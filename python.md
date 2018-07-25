@@ -177,6 +177,7 @@ TypeError: not all arguments converted during string formatting
 '(1, 2, 3)'
 ```
 ### 9.迭代器与生成器
+生成器和迭代器都可迭代
 #### 迭代器
 判断一个对象是否可迭代
 ```
@@ -207,6 +208,54 @@ True
 3
 >>> next(g)
 4
+```
+### 10.高级函数
+#### map
+```
+def f(x):
+    return x*2
+
+r = map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+```
+map中传入两个参数，第一个是函数，第二个是序列，map将函数应用到序列的每个元素中，返回一个Iterator。
+```
+print(next(r))
+print(next(r))
+print(next(r))
+print(next(r))
+print(next(r))
+print(next(r))
+[dy@dy-pc test_pipenv]$ python funxc.py
+2
+4
+6
+8
+10
+12
+```
+#### reduce
+reduce和map用法相似，都是把函数应用到序列的每个元素中，但是reduce把结果继续和序列的下一个元素做累积计算
+```
+# 求1~9的和
+from functools import reduce
+def f(x, y):
+    return x+y
+
+r = reduce(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+print(r)
+[dy@dy-pc test_pipenv]$ python funxc.py
+45
+```
+#### filter
+过滤器，也是输入一个函数和一个序列，返回一个Iterator。
+这个函数输入一个元素，返回一个bool值，用于过滤器筛选元素。
+```
+# 筛选偶数
+def is_odd(n):
+    return n%2 == 0
+
+for r in filter(is_odd, [1, 2, 3, 4, 5]):
+    print(r)
 ```
 
 
